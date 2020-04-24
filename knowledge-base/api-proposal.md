@@ -1,8 +1,9 @@
 ## api proposal
 
 ### lambda expression, e.g., any/all
+> OData defines two operators that evaluate a Boolean expression on a collection. Both must be prepended with a navigation path that identifies a collection.
 #### example
-Give a person who has a friend with username 'scottketchum'.
+Give me a person who has a friend with username 'scottketchum'.
 ```
 /People?$filter=Friends/any(f:f/UserName eq 'scottketchum')
 ```
