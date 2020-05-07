@@ -19,10 +19,11 @@ This document contains a collection of OData v4 features we want to implement an
 - Proposal accepted.
 
 ## $expand with Subqueries
-- Make queries on expanded entities (navigation properties)
+- Make queries on expanded entities (navigation properties and complex properties)
 - Works for `getAll` and `getByKey`
-- Example request for collection: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
-- Example request for single link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
+- Example request for one to many link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
+- Example request for one to one link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
+- Could not find a working example for complex types
 
 ### Questions
 - Query options related to lists should be used on one-to-many navigation properties only? (This is not failing in the reference services)
