@@ -171,16 +171,14 @@ export function entityDeserializer(edmToTs) {
 
   function deserializeCollectionType<EntityT extends EntityBase>(
     json: any[],
-    selectable: CollectionField<EntityT>
+    collectionField: CollectionField<EntityT>
   ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
+    if (collectionField._fieldType instanceof EdmTypeField) {
+      const edmType = collectionField._fieldType.edmType;
       return json.map(v => edmToTs(v, edmType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return json.map(v => deserializeComplexType(v, complexTypeField));
-    }
+    const complexTypeField = collectionField._fieldType;
+    return json.map(v => deserializeComplexType(v, new complexTypeField('' , collectionField._entityConstructor)));
   }
 
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing

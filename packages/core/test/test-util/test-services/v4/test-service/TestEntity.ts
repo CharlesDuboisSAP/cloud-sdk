@@ -7,7 +7,23 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, OneToManyLink, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
+import {
+  AllFields,
+  BigNumberField,
+  BooleanField,
+  CustomField,
+  DateField,
+  Entity,
+  EntityBuilderType,
+  Field,
+  OneToManyLink,
+  NumberField,
+  OneToOneLink,
+  StringField,
+  Time,
+  TimeField,
+  Constructable, ComplexTypeField
+} from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -330,7 +346,7 @@ export namespace TestEntity {
    * Static representation of the [[collectionPropertyWithComplexType]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COLLECTION_PROPERTY_WITH_COMPLEX_TYPE: CollectionField<TestEntity> = new CollectionField('CollectionPropertyWithComplexType', TestEntity, new TestComplexTypeField('', TestEntity));
+  export const COLLECTION_PROPERTY_WITH_COMPLEX_TYPE: CollectionField<TestEntity> = new CollectionField('CollectionPropertyWithComplexType', TestEntity, TestComplexTypeField) as unknown as CollectionField<TestEntity>;
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -105,18 +105,18 @@ export function entitySerializer(tsToEdm) {
 
   function serializeCollectionField<EntityT extends EntityBase>(
     fieldValue: any[],
-    selectable: CollectionField<EntityT>
+    collectionField: CollectionField<EntityT>
   ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
+    if (collectionField._fieldType instanceof EdmTypeField) {
+      const edmType = collectionField._fieldType.edmType;
       return fieldValue.map(v => tsToEdm(v, edmType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return fieldValue.map(v =>
-        serializeComplexTypeField(complexTypeField, v)
-      );
-    }
+
+    const complexTypeField = collectionField._fieldType;
+    return fieldValue.map(v =>
+      serializeComplexTypeField(new complexTypeField('' , collectionField._entityConstructor), v)
+    );
+    
   }
 
   return {
