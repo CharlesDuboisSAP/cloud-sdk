@@ -11,7 +11,8 @@ import {
   ComplexTypeField,
   OneToOneLink,
   isExpandedProperty,
-  EntityBase
+  EntityBase,
+  EdmTypeShared
 } from '../common';
 import { CollectionField } from '../v4/selectable/collection-field';
 
@@ -169,16 +170,21 @@ export function entityDeserializer(edmToTs) {
       }, {});
   }
 
-  function deserializeCollectionType<EntityT extends EntityBase>(
-    json: any[],
-    collectionField: CollectionField<EntityT>
-  ) {
-    if (collectionField._fieldType instanceof EdmTypeField) {
+  function deserializeCollectionType<
+    EntityT extends EntityBase,
+    CollectionT extends typeof ComplexTypeField | EdmTypeShared<'any'>
+  >(json: any[], collectionField: CollectionField<EntityT, CollectionT>) {
+    if (collectionField._fieldType instanceof ComplexTypeField) {
       const edmType = collectionField._fieldType.edmType;
       return json.map(v => edmToTs(v, edmType));
     }
     const complexTypeField = collectionField._fieldType;
-    return json.map(v => deserializeComplexType(v, new complexTypeField('' , collectionField._entityConstructor)));
+    return json.map(v =>
+      deserializeComplexType(
+        v,
+        new complexTypeField('', collectionField._entityConstructor)
+      )
+    );
   }
 
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
